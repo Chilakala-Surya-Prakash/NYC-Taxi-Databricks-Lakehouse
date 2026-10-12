@@ -3,9 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Large data binaries
-*.parquet
-*.parquet.*
+# Large data archives
 *.zip
 *.tar.gz
 
