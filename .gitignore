@@ -1,0 +1,23 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Large data binaries
+*.parquet
+*.parquet.*
+*.zip
+*.tar.gz
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Environment and IDE
+.env
+.venv
+env/
+venv/
+.idea/
+.vscode/
