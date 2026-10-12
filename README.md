@@ -105,23 +105,30 @@ Tracks payment method adoption and tipping patterns:
 
 ## 📊 Databricks AI/BI Executive Dashboard
 
-The repository includes the complete Databricks Lakeview Dashboard export file:
-[`dashboards/NYC Taxi Executive Mobility & Revenue Dashboard.lvdash.json`](dashboards/NYC%20Taxi%20Executive%20Mobility%20&%20Revenue%20Dashboard.lvdash.json).
+The interactive executive dashboard is organized into two primary analytical views:
 
-### Dashboard Layout & Canvas Pages:
+### Page 1: Demand & Economics
+![Demand & Economics Dashboard](dashboards/dashboard_demand_economics.png)
 
-#### 1. Demand & Economics Page
-- **Total Trips by Pickup Hour** *(Line chart)*: Time-series curve of 24-hour demand.
-- **Total Revenue by Pickup Borough** *(Bar chart)*: Revenue generation broken down by borough.
-- **Payment Method Distribution (Card vs. Cash)** *(Pie chart)*: Payment share breakdown.
+- **Total Trips by Pickup Hour** *(Line chart)*: Time-series curve of 24-hour demand showing morning and evening peak traffic.
+- **Total Revenue by Pickup Borough** *(Bar chart)*: Revenue generation broken down by pickup borough.
+- **Payment Method Distribution (Card vs. Cash)** *(Donut/Pie chart)*: 87% cashless adoption.
 - **Total Revenue by Hour** *(Bar chart)*: Financial performance across hourly buckets.
 
-#### 2. Corridors & Tipping Page
-- **Trip Distance & Duration Fluctuations by Hour** *(Multi-line dual measure)*: Traffic congestion vs. distance.
+---
+
+### Page 2: Corridors & Tipping
+![Corridors & Tipping Dashboard](dashboards/dashboard_corridors_tipping.png)
+
+- **Trip Distance & Duration Fluctuations by Hour** *(Dual measure line chart)*: Visualizing congestion versus trip length.
 - **Heaviest Route Corridors by Volume** *(Heatmap)*: Origin-destination density matrix.
 - **Highest Average Fare by Borough Corridor** *(Bar chart)*: Yield and pricing per corridor.
 - **Borough-to-Borough Trip Flow (Intra vs. Inter)** *(Heatmap)*: Cross-borough transit patterns.
 - **Average Card Tip Percentage by Pickup Borough** *(Bar chart)*: Spatial tipping generosity.
+
+> 📄 **Dashboard PDF Exports:**
+> - [Page 1: Demand & Economics (PDF)](dashboards/NYC%20Taxi%20Executive%20Mobility%20&%20Revenue%20Dashboard.pdf)
+> - [Page 2: Corridors & Tipping (PDF)](dashboards/NYC%20Taxi%20Executive%20Mobility%20&%20Revenue%20Dashboard!.pdf)
 
 ---
 
@@ -140,11 +147,15 @@ NYC-Taxi-Databricks-Lakehouse/
 │   ├── 02_SILVER_TRANSFORMATION.py
 │   └── 03_GOLD_AGGREGATIONS.py
 │
-├── dashboards/                                     # Databricks AI/BI Lakeview Dashboard
-│   └── NYC Taxi Executive Mobility & Revenue Dashboard.lvdash.json
+├── dashboards/                                     # Executive Dashboard Exports & Screenshots
+│   ├── dashboard_demand_economics.png              # Page 1 visual preview
+│   ├── dashboard_corridors_tipping.png             # Page 2 visual preview
+│   ├── NYC Taxi Executive Mobility & Revenue Dashboard.pdf
+│   └── NYC Taxi Executive Mobility & Revenue Dashboard!.pdf
 │
-├── data/                                           # Dimension and reference data
-│   └── taxi_zone_lookup.csv                        # NYC TLC Official Taxi Zone lookup (265 zones)
+├── data/                                           # Raw and reference data
+│   ├── taxi_zone_lookup.csv                        # NYC TLC Official Taxi Zone lookup (265 zones)
+│   └── yellow_tripdata_2026-01.parquet             # Raw Yellow Taxi trip records (2.9M+ rows)
 │
 ├── .gitignore
 └── README.md
@@ -155,8 +166,7 @@ NYC-Taxi-Databricks-Lakehouse/
 ## 🚀 How to Run on Databricks
 
 ### 1. Data Preparation
-1. Download the NYC TLC Trip Record dataset (e.g., `yellow_tripdata_2024-01.parquet`) from the [NYC TLC Official Website](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page).
-2. Upload `yellow_tripdata_2024-01.parquet` and `data/taxi_zone_lookup.csv` into your Databricks Unity Catalog Volume:
+1. Upload `data/yellow_tripdata_2026-01.parquet` and `data/taxi_zone_lookup.csv` into your Databricks Unity Catalog Volume:
    ```
    /Volumes/workspace/default/landing_zone/
    ```
@@ -167,12 +177,7 @@ NYC-Taxi-Databricks-Lakehouse/
    - `01_BRONZE_INGESTION.ipynb`
    - `02_SILVER_TRANSFORMATION.ipynb`
    - `03_GOLD_AGGREGATIONS.ipynb`
-
-### 3. Import the AI/BI Dashboard
-1. In Databricks, navigate to **Dashboards** (or Lakeview).
-2. Click **Create Dashboard** ➔ click the `...` menu ➔ **Import from JSON**.
-3. Select `dashboards/NYC Taxi Executive Mobility & Revenue Dashboard.lvdash.json`.
-4. Connect the dataset sources to `workspace.default.gold_*` tables and publish!
+3. Attach to a cluster (Databricks Runtime 13.3+ LTS or higher) and execute the pipeline sequentially.
 
 ---
 
